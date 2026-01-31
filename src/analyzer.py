@@ -668,20 +668,32 @@ class GeminiAnalyzer:
                     time.sleep(delay)
                 
                 config = get_config()
-                response = self._openai_client.chat.completions.create(
-                    model=self._current_model_name,
-                    messages=[
+                response = self._openai_client.responses.create(
+                    model=self._current_model_name,   # 来自 config，不写死
+                    input=[
                         {"role": "system", "content": self.SYSTEM_PROMPT},
                         {"role": "user", "content": prompt}
                     ],
                     temperature=generation_config.get('temperature', config.openai_temperature),
-                    max_tokens=generation_config.get('max_output_tokens', 8192),
+                    max_output_tokens=generation_config.get('max_output_tokens', 8192),
                 )
                 
-                if response and response.choices and response.choices[0].message.content:
-                    return response.choices[0].message.content
-                else:
+                if not response or not getattr(response, "output", None):
                     raise ValueError("OpenAI API 返回空响应")
+
+                texts = []
+
+                for item in response.output:
+                    if hasattr(item, "content"):
+                        for block in item.content:
+                            if hasattr(block, "text") and block.text:
+                                texts.append(block.text)
+
+                if not texts:
+                    raise ValueError("OpenAI API 返回内容为空")
+
+                return "\n".join(texts).strip()
+
                     
             except Exception as e:
                 error_str = str(e)
