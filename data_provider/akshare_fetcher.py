@@ -472,51 +472,9 @@ class AkshareFetcher(BaseFetcher):
         
         return df
     
-    """
-    def get_realtime_quote(self, stock_code: str, source: str = "em") -> Optional[UnifiedRealtimeQuote]:
-        """
-        获取实时行情数据（支持多数据源）
-
-        数据源优先级（可配置）：
-        1. em: 东方财富（akshare ak.stock_zh_a_spot_em）- 数据最全，含量比/PE/PB/市值等
-        2. sina: 新浪财经（akshare ak.stock_zh_a_spot）- 轻量级，基本行情
-        3. tencent: 腾讯直连接口 - 单股票查询，负载小
-
-        Args:
-            stock_code: 股票/ETF代码
-            source: 数据源类型，可选 "em", "sina", "tencent"
-
-        Returns:
-            UnifiedRealtimeQuote 对象，获取失败返回 None
-        """
-        # 检查熔断器状态
-        circuit_breaker = get_realtime_circuit_breaker()
-        source_key = f"akshare_{source}"
-        
-        if not circuit_breaker.is_available(source_key):
-            logger.warning(f"[熔断] 数据源 {source_key} 处于熔断状态，跳过")
-            return None
-        
-        # 根据代码类型选择不同的获取方法
-        if _is_us_code(stock_code):
-            # 美股不使用 Akshare，由 YfinanceFetcher 处理
-            logger.debug(f"[API跳过] {stock_code} 是美股，Akshare 不支持美股实时行情")
-            return None
-        elif _is_hk_code(stock_code):
-            return self._get_hk_realtime_quote(stock_code)
-        elif _is_etf_code(stock_code):
-            return self._get_etf_realtime_quote(stock_code)
-        else:
-            # 普通 A 股：根据 source 选择数据源
-            if source == "sina":
-                return self._get_stock_realtime_quote_sina(stock_code)
-            elif source == "tencent":
-                return self._get_stock_realtime_quote_tencent(stock_code)
-            else:
-                return self._get_stock_realtime_quote_em(stock_code)
-    """
+    
     def get_realtime_quote(self, stock_code, source="em"):
-    return None
+        return None
 
     
     def _get_stock_realtime_quote_em(self, stock_code: str) -> Optional[UnifiedRealtimeQuote]:
