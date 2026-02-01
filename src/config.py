@@ -52,7 +52,7 @@ class Config:
 
     # OpenAI 兼容 API（备选，当 Gemini 不可用时使用）
     openai_api_key: Optional[str] = None
-    openai_base_url: Optional[str] = None  # 如: https://api.openai.com/v1
+    openai_base_url: Optional[str] = https://api.openai.com/v1
     openai_model: str = "gpt-4o"  # OpenAI 兼容模型名称
     openai_temperature: float = 0.7  # OpenAI 温度参数（0.0-2.0，默认0.7）
     
@@ -298,7 +298,7 @@ class Config:
             gemini_max_retries=int(os.getenv('GEMINI_MAX_RETRIES', '5')),
             gemini_retry_delay=float(os.getenv('GEMINI_RETRY_DELAY', '5.0')),
             openai_api_key=os.getenv('OPENAI_API_KEY'),
-            openai_base_url=os.getenv('OPENAI_BASE_URL'),
+            openai_base_url=os.getenv('OPENAI_BASE_URL', "https://api.openai.com/v1"),
             openai_model=os.getenv('OPENAI_MODEL', 'gpt-4o'),
             openai_temperature=float(os.getenv('OPENAI_TEMPERATURE', '0.7')),
             bocha_api_keys=bocha_api_keys,
