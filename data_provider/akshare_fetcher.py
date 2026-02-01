@@ -260,7 +260,7 @@ class AkshareFetcher(BaseFetcher):
         import akshare as ak
 
         if _is_us_code(stock_code):
-        return pd.DataFrame()   # 美股不走 akshare
+            return pd.DataFrame()   # 美股不走 akshare
 
         
         # 防封禁策略 1: 随机 User-Agent
