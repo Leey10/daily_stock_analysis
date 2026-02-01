@@ -51,7 +51,7 @@ class YfinanceFetcher(BaseFetcher):
     """
     
     name = "YfinanceFetcher"
-    priority = 4
+    priority = 1
     
     def __init__(self):
         """初始化 YfinanceFetcher"""
@@ -131,6 +131,10 @@ class YfinanceFetcher(BaseFetcher):
         3. 处理返回数据
         """
         import yfinance as yf
+
+        if stock_code.isalpha():   # AAPL TSLA NVDA 等
+        pass  # 直接用 yfinance
+
         
         # 转换代码格式
         yf_code = self._convert_stock_code(stock_code)
