@@ -405,6 +405,7 @@ class EfinanceFetcher(BaseFetcher):
         
         return df
     
+    """
     def get_realtime_quote(self, stock_code: str) -> Optional[EfinanceRealtimeQuote]:
         """
         获取实时行情数据
@@ -505,6 +506,11 @@ class EfinanceFetcher(BaseFetcher):
             logger.error(f"[API错误] 获取 {stock_code} 实时行情(efinance)失败: {e}")
             circuit_breaker.record_failure(source_key, str(e))
             return None
+    """
+    def get_realtime_quote(self, stock_code: str):
+    logger.info(f"[跳过] efinance 实时行情禁用，仅分析美股: {stock_code}")
+    return None
+
     
     def get_base_info(self, stock_code: str) -> Optional[Dict[str, Any]]:
         """
