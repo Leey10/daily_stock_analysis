@@ -128,11 +128,11 @@ class Config:
 
     # === 实时行情增强数据配置 ===
     # 实时行情开关（关闭后使用历史收盘价进行分析）
-    enable_realtime_quote: bool = True
+    enable_realtime_quote: bool = False
     # 筹码分布开关（该接口不稳定，云端部署建议关闭）
-    enable_chip_distribution: bool = True
+    enable_chip_distribution: bool = False
     # 实时行情数据源优先级（逗号分隔）
-    realtime_source_priority: str = "akshare_sina,tencent,efinance,akshare_em"
+    realtime_source_priority: str = "yfinance"
     # 实时行情缓存时间（秒）
     realtime_cache_ttl: int = 600
     # 熔断器冷却时间（秒）
@@ -272,7 +272,7 @@ class Config:
         
         # 如果没有配置，使用默认的示例股票
         if not stock_list:
-            stock_list = ['600519', '000001', '300750']
+            stock_list = ['TSLA', 'GOOG', 'IREN']
         
         # 解析搜索引擎 API Keys（支持多个 key，逗号分隔）
         bocha_keys_str = os.getenv('BOCHA_API_KEYS', '')
