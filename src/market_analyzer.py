@@ -90,12 +90,10 @@ class MarketAnalyzer:
     
     # 主要指数代码
     MAIN_INDICES = {
-        'sh000001': '上证指数',
-        'sz399001': '深证成指',
-        'sz399006': '创业板指',
-        'sh000688': '科创50',
-        'sh000016': '上证50',
-        'sh000300': '沪深300',
+        'VOO': 'S&P 500 ETF',
+        'QQQ': 'NASDAQ 100 ETF',
+        'DIA': 'Dow Jones ETF',
+        'VIX': 'Volatility Index'
     }
     
     def __init__(self, search_service: Optional[SearchService] = None, analyzer=None):
@@ -155,7 +153,10 @@ class MarketAnalyzer:
             logger.info("[大盘] 获取主要指数实时行情...")
             
             # 使用 akshare 获取指数行情（新浪财经接口，包含深市指数）
-            df = self._call_akshare_with_retry(ak.stock_zh_index_spot_sina, "指数行情", attempts=2)
+            # df = self._call_akshare_with_retry(ak.stock_zh_index_spot_sina, "指数行情", attempts=2)
+            ticker = yf.Ticker(code)
+            hist = ticker.history(period="2d")
+
             
             if df is not None and not df.empty:
                 for code, name in self.MAIN_INDICES.items():
@@ -261,7 +262,10 @@ class MarketAnalyzer:
             logger.info("[大盘] 获取市场涨跌统计...")
             
             # 获取全部A股实时行情
-            df = self._call_akshare_with_retry(ak.stock_zh_a_spot_em, "A股实时行情", attempts=2)
+            # df = self._call_akshare_with_retry(ak.stock_zh_a_spot_em, "A股实时行情", attempts=2)
+            ticker = yf.Ticker(code)
+            hist = ticker.history(period="2d")
+
             
             if df is not None and not df.empty:
                 # 涨跌统计
@@ -295,7 +299,11 @@ class MarketAnalyzer:
             logger.info("[大盘] 获取板块涨跌榜...")
             
             # 获取行业板块行情
-            df = self._call_akshare_with_retry(ak.stock_board_industry_name_em, "行业板块行情", attempts=2)
+            #df = self._call_akshare_with_retry(ak.stock_board_industry_name_em, "行业板块行情", attempts=2)
+            ticker = yf.Ticker(code)
+            hist = ticker.history(period="2d")
+
+            
             
             if df is not None and not df.empty:
                 change_col = '涨跌幅'
