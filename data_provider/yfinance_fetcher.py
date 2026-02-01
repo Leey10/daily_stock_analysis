@@ -133,7 +133,7 @@ class YfinanceFetcher(BaseFetcher):
         import yfinance as yf
 
         if stock_code.isalpha():   # AAPL TSLA NVDA 等
-        pass  # 直接用 yfinance
+            pass  # 直接用 yfinance
 
         
         # 转换代码格式
