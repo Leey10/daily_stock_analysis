@@ -127,7 +127,7 @@ class TushareFetcher(BaseFetcher):
         Returns:
             True 表示可用，False 表示不可用
         """
-        return self._api is not None
+        return False
 
     def _check_rate_limit(self) -> None:
         """
