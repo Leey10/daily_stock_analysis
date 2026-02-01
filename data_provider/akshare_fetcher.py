@@ -258,6 +258,10 @@ class AkshareFetcher(BaseFetcher):
         数据来源：ak.stock_zh_a_hist()
         """
         import akshare as ak
+
+        if _is_us_code(stock_code):
+        return pd.DataFrame()   # 美股不走 akshare
+
         
         # 防封禁策略 1: 随机 User-Agent
         self._set_random_user_agent()
@@ -468,6 +472,7 @@ class AkshareFetcher(BaseFetcher):
         
         return df
     
+    """
     def get_realtime_quote(self, stock_code: str, source: str = "em") -> Optional[UnifiedRealtimeQuote]:
         """
         获取实时行情数据（支持多数据源）
@@ -509,6 +514,10 @@ class AkshareFetcher(BaseFetcher):
                 return self._get_stock_realtime_quote_tencent(stock_code)
             else:
                 return self._get_stock_realtime_quote_em(stock_code)
+    """
+    def get_realtime_quote(self, stock_code, source="em"):
+    return None
+
     
     def _get_stock_realtime_quote_em(self, stock_code: str) -> Optional[UnifiedRealtimeQuote]:
         """
