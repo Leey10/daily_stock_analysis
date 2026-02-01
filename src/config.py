@@ -52,7 +52,7 @@ class Config:
 
     # OpenAI 兼容 API（备选，当 Gemini 不可用时使用）
     openai_api_key: Optional[str] = None
-    openai_base_url: Optional[str] = https://api.openai.com/v1
+    openai_base_url: Optional[str] = "https://api.openai.com/v1"
     openai_model: str = "gpt-4o"  # OpenAI 兼容模型名称
     openai_temperature: float = 0.7  # OpenAI 温度参数（0.0-2.0，默认0.7）
     
